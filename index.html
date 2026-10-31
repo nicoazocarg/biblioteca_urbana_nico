@@ -6,21 +6,6 @@
 <style>*,*::before,*::after{box-sizing:border-box}body{margin:0}</style>
 <title>Biblioteca Subterránea de Nico :)</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<meta name="description" content="399 fichas sobre ciudad, urbanismo, diseño urbano y sociología urbana, en una cripta retro de 8 bits. Con libro secreto escondido.">
-<meta property="og:type" content="website">
-<meta property="og:locale" content="es_MX">
-<meta property="og:site_name" content="Biblioteca Urbana Subterránea de Nico">
-<meta property="og:title" content="Biblioteca Urbana Subterránea de Nico">
-<meta property="og:description" content="399 fichas sobre ciudad, urbanismo, diseño urbano y sociología urbana, en una cripta retro de 8 bits. Con libro secreto escondido.">
-<meta property="og:url" content="https://nicoazocarg.github.io/biblioteca_urbana_nico/">
-<meta property="og:image" content="https://nicoazocarg.github.io/biblioteca_urbana_nico/og-image.png">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Esqueleto bibliotecario que saluda detrás de un mesón, entre estanterías y un candelabro">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Biblioteca Urbana Subterránea de Nico">
-<meta name="twitter:description" content="399 fichas sobre ciudad, urbanismo, diseño urbano y sociología urbana, en una cripta retro de 8 bits.">
-<meta name="twitter:image" content="https://nicoazocarg.github.io/biblioteca_urbana_nico/og-image.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=IBM+Plex+Mono:wght@400;500&family=Press+Start+2P&display=swap">
 <style>
@@ -171,6 +156,35 @@ body.cubierta{overflow:hidden}
 .apa{margin-top:10px;padding:10px 12px;border-left:3px solid var(--tc,var(--accent));background:var(--chip);display:grid;gap:8px;justify-items:start}
 .apa-t{margin:0;font-size:14px;line-height:1.55;padding-left:1.6em;text-indent:-1.6em;overflow-wrap:anywhere;color:var(--ink)}
 .apa-n{margin:0;font-family:var(--mono);font-size:11px;line-height:1.5;color:var(--muted)}
+
+/* ===== Buzón: murciélago mensajero ===== */
+#buzon{position:fixed;right:max(14px,env(safe-area-inset-right,0px));bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:40;
+  width:68px;height:68px;padding:0;background:#15161a;border:3px solid var(--accent);border-radius:6px;cursor:pointer;
+  display:grid;place-items:center;box-shadow:0 4px 0 #000,0 0 0 2px #000}
+#buzon canvas{width:52px;height:52px;image-rendering:pixelated;display:block}
+#buzon:hover,#buzon:focus-visible{background:#22242a}
+#buzon:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+body.editing #buzon{display:none}
+@media (max-width:420px){#buzon{width:58px;height:58px}#buzon canvas{width:44px;height:44px}}
+#libro{position:fixed;inset:0;z-index:70;background:#000c;display:flex;align-items:center;justify-content:center;padding:20px 16px;overflow:auto}
+.lbox{background:#f4ead2;color:#2a2416;border:6px double #6a5530;box-shadow:0 0 0 4px #111214;padding:20px 18px;max-width:430px;width:100%;margin:auto;display:grid;gap:10px}
+.lbox h3{font-family:var(--pixel);font-weight:400;font-size:12px;line-height:1.7;color:#5a3f1a;margin:0;text-transform:uppercase;letter-spacing:.04em}
+.lbox .lsub{font-family:var(--body);font-size:15px;line-height:1.5;color:#5c4a28;margin:0}
+.lbox .lficha{font-family:var(--mono);font-size:12px;line-height:1.5;color:#2a2416;background:#e4d6b2;border-left:3px solid #8a7040;padding:7px 9px;margin:0}
+.lbox label{font-family:var(--mono);font-size:12px;color:#5c4a28;display:grid;gap:4px}
+.lbox textarea,.lbox input{font-family:var(--body);font-size:16px;color:#2a2416;background:#fffbef;border:2px solid #8a7040;border-radius:0;padding:9px 10px;width:100%;box-sizing:border-box}
+.lbox textarea{min-height:92px;resize:vertical}
+.lbox textarea::placeholder,.lbox input::placeholder{color:#9a8c6c}
+.lbox textarea:focus-visible,.lbox input:focus-visible{outline:2px solid #5a3f1a;outline-offset:1px}
+.lrow{display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:flex-end}
+.lbox button{font-family:var(--pixel);font-size:10px;line-height:1.5;padding:10px 12px;cursor:pointer;border:2px solid #5a3f1a}
+.lbox .lenviar{background:#5a3f1a;color:#f4ead2}
+.lbox .lcerrar{background:transparent;color:#5a3f1a}
+.lbox button:hover,.lbox button:focus-visible{outline:2px solid #2a2416;outline-offset:2px}
+.lbox .lenviar[disabled]{opacity:.6;cursor:wait}
+.lbox .lmsg{font-family:var(--mono);font-size:13px;line-height:1.5;color:#2f6b4a;margin:0;min-height:1.2em}
+.lbox .lmsg.err{color:#9a2b1c}
+.lbox .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
 /* ===== Arcade nocturno + cripta lectora ===== */
 :root:root:root{--paper:#111214;--card:#1b1d21;--ink:#f2e8cf;--muted:#a8a28f;--line:#2e3036;--accent:#e7c23f;--accent-ink:#111214;--mark:#e7c23f;--chip:#2a2c31;--edit:#2c2a1c;--pixel:'Press Start 2P',ui-monospace,monospace;color-scheme:dark}
 body{background:var(--paper)}
@@ -260,6 +274,11 @@ h1{font-family:var(--pixel);font-weight:400;font-size:clamp(22px,4.6vw,44px);lin
     <div class="prow"><span class="plab">Mensaje de despedida</span><span data-edit="outroTitulo"></span></div>
     <div class="prow"><span class="plab">Mensaje de abajo</span><span data-edit="outroMensaje"></span></div>
     <div class="prow"><span class="plab">Botón para volver</span><span data-edit="outroBoton"></span></div>
+    <div class="prow"><span class="plab">Buzón: título</span><span data-edit="buzonTitulo"></span></div>
+    <div class="prow"><span class="plab">Buzón: bajada</span><span data-edit="buzonBajada"></span></div>
+    <div class="prow"><span class="plab">Buzón: etiqueta del nombre</span><span data-edit="buzonNombre"></span></div>
+    <div class="prow"><span class="plab">Buzón: botón de cerrar</span><span data-edit="buzonCerrar"></span></div>
+    <div class="prow"><span class="plab">Botón de comentar en la ficha</span><span data-edit="fichaBoton"></span></div>
     <div class="prow"><span class="plab">Título de la cajita de comentarios</span><span data-edit="comentTitulo"></span></div>
     <div class="prow"><span class="plab">Botón de enviar</span><span data-edit="comentBoton"></span></div>
     <div class="prow"><span class="plab">Mensaje al enviar</span><span data-edit="comentGracias"></span></div>
@@ -307,6 +326,22 @@ h1{font-family:var(--pixel);font-weight:400;font-size:clamp(22px,4.6vw,44px);lin
   <button class="save" id="save" type="button">Guardar cambios</button>
 </div>
 
+<button id="buzon" type="button" hidden><canvas width="24" height="24" role="img" aria-label="Murciélago mensajero: dejar un comentario"></canvas></button>
+<div class="secreto" id="libro" role="dialog" aria-modal="true" aria-labelledby="lib-t" hidden>
+  <form class="lbox" id="lform" novalidate>
+    <h3 id="lib-t" data-show="buzonTitulo"></h3>
+    <p class="lsub" data-show="buzonBajada"></p>
+    <p class="lficha" id="lficha" hidden></p>
+    <label><span data-show="comentTitulo"></span><textarea id="ltxt" name="comentario" maxlength="2000" placeholder="Escribe aquí…"></textarea></label>
+    <label><span data-show="buzonNombre"></span><input id="lnom" name="nombre" maxlength="80" autocomplete="name" placeholder="Nombre"></label>
+    <div class="hp" aria-hidden="true"><input type="text" name="_gotcha" tabindex="-1" autocomplete="off"></div>
+    <p class="lmsg" id="lmsg" role="status" aria-live="polite"></p>
+    <div class="lrow">
+      <button class="lcerrar" id="lcerrar" type="button" data-show="buzonCerrar"></button>
+      <button class="lenviar" type="submit" data-show="comentBoton"></button>
+    </div>
+  </form>
+</div>
 <div class="secreto" id="pista" role="dialog" aria-modal="true" aria-labelledby="pis-t" hidden>
   <div class="sbox">
     <p class="skick" id="pis-t" data-show="pistaAviso"></p>
@@ -354,6 +389,8 @@ const DEF = {portadaBoton:"entrar a la biblioteca :)", salirBoton:"SALIR DE LA B
   outroTitulo:"gracias por visitar la biblioteca urbana nico", outroMensaje:"¡aguante la lectura y el conocimiento!",
   outroBoton:"Volver a entrar a la biblioteca :P", fecha:"",
   comentTitulo:"¿Algo que contarme? Déjame un comentario", comentBoton:"ENVIAR", comentGracias:"¡Gracias por tu comentario! :)",
+  buzonTitulo:"Libro de visitas", buzonBajada:"El murciélago lleva tu mensaje directo a mi correo. Nadie más lo ve.",
+  buzonNombre:"Tu nombre (opcional)", buzonCerrar:"Cerrar", fichaBoton:"Comentar",
   secretoAviso:"¡Encontraste el libro secreto!", secretoTitulo:"Recomendación del momento",
   secretoTexto:"<b>Louis Wirth, «El urbanismo como modo de vida» (1938).</b> El ensayo clásico de la Escuela de Chicago sobre por qué el tamaño, la densidad y la diversidad de la ciudad cambian nuestra forma de vivir. Corto, claro y de descarga libre.",
   secretoBuscar:"El urbanismo como modo de vida",
@@ -362,6 +399,9 @@ const DEF = {portadaBoton:"entrar a la biblioteca :)", salirBoton:"SALIR DE LA B
 const TC = {GEN:"#ed93b1",DER:"#9d93f0",INM:"#f0997b",RUR:"#c0dd97",CAL:"#5dcaa5",ESP:"#e7c23f",MOV:"#ef9f27",INF:"#85b7eb",INC:"#d98be0",AMB:"#97c459",PAR:"#7fd3e0",PLA:"#c9a96e",TEO:"#cecbf6",CON:"#f09595"};
 /* Servicios externos: Formspree (comentarios) y GoatCounter (visitas). Vacíos = desactivados. */
 const CFG = {formspree:"xdeeldvv", goatcounter:"bibliotecaurbananico"};
+const EN_ARTEFACTO = !!(window.claude && window.claude.use);
+const FID = (!EN_ARTEFACTO && /^[A-Za-z0-9]{4,20}$/.test(CFG.formspree)) ? CFG.formspree : "";
+const COMENTAR = !!FID;
 const txt = k => TX[k] || DEF[k] || "";
 function renderTexts(){
   document.querySelectorAll('[data-edit]').forEach(el=>{
@@ -579,6 +619,7 @@ function card(r){
         ${(r.extra||[]).map(([l,u])=>`<a class="btn" href="${esc(u)}" target="_blank" rel="noopener">PDF: ${esc(l)}</a>`).join("")}
         <a class="btn ${r.descarga||(r.extra||[]).length?"ghost":""}" href="${esc(r.url)}" target="_blank" rel="noopener">${srcLabel(r)}</a>
         <button class="btn ghost" type="button" data-cite="${r.id}" aria-expanded="false">Cita APA</button>
+        ${COMENTAR ? `<button class="btn ghost" type="button" data-coment="${r.id}">${esc(txt("fichaBoton"))}</button>` : ""}
       </div>
     </div>
   </article>`;
@@ -811,8 +852,7 @@ renderTexts(); renderStats(); update();
   show('portada');
   /* Cajita de comentarios (Formspree) */
   const form = document.getElementById('coment'), cmsg = document.getElementById('cmsg');
-  const enArtefacto = !!(window.claude && window.claude.use);
-  const fid = (!enArtefacto && /^[A-Za-z0-9]{4,20}$/.test(CFG.formspree)) ? CFG.formspree : "";
+  const enArtefacto = EN_ARTEFACTO, fid = FID;
   if(fid){
     form.hidden = false;
     const ctxt = document.getElementById('ctxt');
@@ -844,6 +884,83 @@ renderTexts(); renderStats(); update();
     show('outro'); try{ document.getElementById('volver').focus({preventScroll:true}); }catch(e){}
   }));
   document.getElementById('volver').addEventListener('click',()=>{ show('portada'); window.scrollTo(0,0); });
+})();
+
+/* ---------- Buzón: murciélago mensajero + libro de visitas ---------- */
+(function(){
+  const btn = document.getElementById('buzon'), modal = document.getElementById('libro');
+  const form = document.getElementById('lform'), lmsg = document.getElementById('lmsg');
+  const ltxt = document.getElementById('ltxt'), lficha = document.getElementById('lficha');
+  if(!btn || !modal || !COMENTAR) return;
+  btn.hidden = false;
+
+  /* Sprite 24x24: murciélago con sobre lacrado, dos cuadros */
+  const P = {'.':null,'1':'#0b0c0e','3':'#3a3147','4':'#574a6b','5':'#7a6b96','6':'#f2e8cf','9':'#c9a96e','c':'#b8402f'};
+  const BAT = [[
+'........................','...4..................4.','...44................44.',
+'...454..4..........4.454','...4554.44........44.455','....4554.44......44.554.',
+'....45554444444444.5554.','.....45555444444455554..','......45555444455554....',
+'.......4.3.4..4.3.4.....','.......33.555555.33.....','........3.511115.3......',
+'.........55111155.......','..........555555........','...........5555.........','............55..........'
+],[
+'........................','........................','........................','........................',
+'.........4......4.......','........4.4....4.4......','...44444.4444444.44444..','..455554444444444555544.',
+'..455555444444445555554.','...4555.3.4..4.3.5554...','....4..33.555555.33..4..','........3.511115.3......',
+'.........55111155.......','..........555555........','...........5555.........','............55..........'
+]];
+  const SOBRE = ['1111111111','1966666691','1696666961','1669669661','1666cc6661','1666cc6661','1111111111'];
+  const cv = btn.querySelector('canvas'), g = cv.getContext('2d');
+  let fr = 0, timer = null;
+  function pinta(){
+    g.clearRect(0,0,24,24);
+    const put = (rows,ox,oy)=>rows.forEach((row,y)=>{ for(let x=0;x<row.length;x++){ const c=P[row[x]]; if(c){ g.fillStyle=c; g.fillRect(x+ox,y+oy,1,1); } } });
+    put(BAT[fr],0,0); put(SOBRE,7,16);
+  }
+  pinta();
+  const quieto = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(!quieto) timer = setInterval(()=>{ fr = 1-fr; pinta(); }, 430);
+
+  let anterior = null;
+  function abrir(r){
+    if(r){ lficha.hidden = false; lficha.textContent = 'Sobre la ficha ' + r._call + ' · ' + r.titulo; lficha.dataset.ficha = r._call + ' · ' + r.titulo; }
+    else { lficha.hidden = true; lficha.textContent = ''; delete lficha.dataset.ficha; }
+    lmsg.textContent = ''; lmsg.classList.remove('err');
+    anterior = document.activeElement;
+    modal.hidden = false;
+    try{ ltxt.focus({preventScroll:true}); }catch(e){}
+  }
+  function cerrar(){
+    modal.hidden = true;
+    try{ if(anterior && anterior.isConnected) anterior.focus({preventScroll:true}); }catch(e){}
+  }
+  btn.addEventListener('click', ()=>abrir(null));
+  document.getElementById('lcerrar').addEventListener('click', cerrar);
+  modal.addEventListener('click', e=>{ if(e.target === modal) cerrar(); });
+  document.addEventListener('keydown', e=>{ if(e.key === 'Escape' && !modal.hidden) cerrar(); });
+  document.getElementById('grid').addEventListener('click', e=>{
+    const b = e.target.closest('[data-coment]'); if(!b) return;
+    const r = DATA.find(x=>x.id == b.dataset.coment); if(r) abrir(r);
+  });
+  ltxt.addEventListener('input', ()=>{ if(lmsg.classList.contains('err')){ lmsg.textContent=''; lmsg.classList.remove('err'); } });
+
+  form.addEventListener('submit', async e=>{
+    e.preventDefault();
+    const env = form.querySelector('.lenviar');
+    if(!ltxt.value.trim()){ lmsg.classList.add('err'); lmsg.textContent = 'Escribe algo antes de enviar.'; ltxt.focus(); return; }
+    env.disabled = true; lmsg.classList.remove('err'); lmsg.textContent = 'Enviando…';
+    const fd = new FormData(form);
+    const f = lficha.dataset.ficha;
+    if(f) fd.append('ficha', f);
+    fd.append('_subject', 'Comentario en la Biblioteca Subterránea de Nico' + (f ? ' · ' + f : ''));
+    try{
+      const res = await fetch('https://formspree.io/f/' + FID, {method:'POST', body:fd, headers:{Accept:'application/json'}});
+      if(!res.ok) throw new Error(res.status);
+      form.reset(); lmsg.textContent = txt('comentGracias');
+      setTimeout(()=>{ if(!modal.hidden) cerrar(); }, 2200);
+    }catch(err){
+      lmsg.classList.add('err'); lmsg.textContent = 'No se pudo enviar. Puedes escribirme a bibliotecaurbana.nico@gmail.com';
+    }finally{ env.disabled = false; }
+  });
 })();
 
 /* ---------- Cripta lectora: encabezado animado y libro secreto ---------- */

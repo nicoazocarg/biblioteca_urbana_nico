@@ -158,14 +158,14 @@ body.cubierta{overflow:hidden}
 .apa-n{margin:0;font-family:var(--mono);font-size:11px;line-height:1.5;color:var(--muted)}
 
 /* ===== Buzón: murciélago mensajero ===== */
-#buzon{position:fixed;right:max(14px,env(safe-area-inset-right,0px));bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:40;
-  width:68px;height:68px;padding:0;background:#15161a;border:3px solid var(--accent);border-radius:6px;cursor:pointer;
-  display:grid;place-items:center;box-shadow:0 4px 0 #000,0 0 0 2px #000}
-#buzon canvas{width:52px;height:52px;image-rendering:pixelated;display:block}
-#buzon:hover,#buzon:focus-visible{background:#22242a}
-#buzon:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
-body.editing #buzon{display:none}
-@media (max-width:420px){#buzon{width:58px;height:58px}#buzon canvas{width:44px;height:44px}}
+.buzon{display:inline-flex;align-items:center;gap:8px;margin:4px;padding:6px 10px 6px 6px;cursor:pointer;
+  font-family:var(--pixel);font-size:10px;line-height:1.4;letter-spacing:.02em;
+  background:var(--card);color:var(--accent);border:2px solid var(--accent);box-shadow:0 0 0 2px var(--paper),0 0 0 4px var(--accent)}
+.buzon canvas{width:34px;height:34px;image-rendering:pixelated;display:block;flex:none}
+.buzon:hover,.buzon:focus-visible{background:var(--accent);color:var(--paper)}
+.buzon:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+body.editing .buzon{display:none}
+.salida{flex-wrap:wrap;gap:10px}
 #libro{position:fixed;inset:0;z-index:70;background:#000c;display:flex;align-items:center;justify-content:center;padding:20px 16px;overflow:auto}
 .lbox{background:#f4ead2;color:#2a2416;border:6px double #6a5530;box-shadow:0 0 0 4px #111214;padding:20px 18px;max-width:430px;width:100%;margin:auto;display:grid;gap:10px}
 .lbox h3{font-family:var(--pixel);font-weight:400;font-size:12px;line-height:1.7;color:#5a3f1a;margin:0;text-transform:uppercase;letter-spacing:.04em}
@@ -259,6 +259,7 @@ h1{font-family:var(--pixel);font-weight:400;font-size:clamp(22px,4.6vw,44px);lin
       <div class="eyebrow" data-edit="eyebrow"></div>
       <div class="hbtns">
         <button class="editbtn" id="editbtn" type="button" hidden>Editar textos</button>
+        <button class="buzon" type="button" data-buzon hidden><canvas width="24" height="24" aria-hidden="true"></canvas><span data-show="buzonBoton"></span></button>
         <button class="salir" type="button" data-salir><span data-show="salirBoton"></span></button>
       </div>
     </div>
@@ -275,7 +276,7 @@ h1{font-family:var(--pixel);font-weight:400;font-size:clamp(22px,4.6vw,44px);lin
     <div class="prow"><span class="plab">Mensaje de abajo</span><span data-edit="outroMensaje"></span></div>
     <div class="prow"><span class="plab">Botón para volver</span><span data-edit="outroBoton"></span></div>
     <div class="prow"><span class="plab">Buzón: título</span><span data-edit="buzonTitulo"></span></div>
-    <div class="prow"><span class="plab">Buzón: bajada</span><span data-edit="buzonBajada"></span></div>
+    <div class="prow"><span class="plab">Buzón: botón de la biblioteca</span><span data-edit="buzonBoton"></span></div>
     <div class="prow"><span class="plab">Buzón: etiqueta del nombre</span><span data-edit="buzonNombre"></span></div>
     <div class="prow"><span class="plab">Buzón: botón de cerrar</span><span data-edit="buzonCerrar"></span></div>
     <div class="prow"><span class="plab">Botón de comentar en la ficha</span><span data-edit="fichaBoton"></span></div>
@@ -318,7 +319,7 @@ h1{font-family:var(--pixel);font-weight:400;font-size:clamp(22px,4.6vw,44px);lin
 
   <footer id="notas"></footer>
   <p class="fecha" data-edit="fecha"></p>
-  <div class="salida"><button class="salir" type="button" data-salir><span data-show="salirBoton"></span></button></div>
+  <div class="salida"><button class="buzon" type="button" data-buzon hidden><canvas width="24" height="24" aria-hidden="true"></canvas><span data-show="buzonBoton"></span></button><button class="salir" type="button" data-salir><span data-show="salirBoton"></span></button></div>
 </div>
 <div class="editbar" id="editbar" hidden>
   <span class="msg" id="editmsg">Haz clic en cualquier texto resaltado para cambiarlo: título, bajada, temas, notas al pie, fecha y los textos de la portada y la salida.</span>
@@ -326,14 +327,12 @@ h1{font-family:var(--pixel);font-weight:400;font-size:clamp(22px,4.6vw,44px);lin
   <button class="save" id="save" type="button">Guardar cambios</button>
 </div>
 
-<button id="buzon" type="button" hidden><canvas width="24" height="24" role="img" aria-label="Murciélago mensajero: dejar un comentario"></canvas></button>
 <div class="secreto" id="libro" role="dialog" aria-modal="true" aria-labelledby="lib-t" hidden>
   <form class="lbox" id="lform" novalidate>
     <h3 id="lib-t" data-show="buzonTitulo"></h3>
-    <p class="lsub" data-show="buzonBajada"></p>
     <p class="lficha" id="lficha" hidden></p>
     <label><span data-show="comentTitulo"></span><textarea id="ltxt" name="comentario" maxlength="2000" placeholder="Escribe aquí…"></textarea></label>
-    <label><span data-show="buzonNombre"></span><input id="lnom" name="nombre" maxlength="80" autocomplete="name" placeholder="Nombre"></label>
+    <label><span data-show="buzonNombre"></span><input id="lnom" name="nombre" maxlength="80" autocomplete="name" placeholder="Nombre" aria-required="true"></label>
     <div class="hp" aria-hidden="true"><input type="text" name="_gotcha" tabindex="-1" autocomplete="off"></div>
     <p class="lmsg" id="lmsg" role="status" aria-live="polite"></p>
     <div class="lrow">
@@ -389,8 +388,8 @@ const DEF = {portadaBoton:"entrar a la biblioteca :)", salirBoton:"SALIR DE LA B
   outroTitulo:"gracias por visitar la biblioteca urbana nico", outroMensaje:"¡aguante la lectura y el conocimiento!",
   outroBoton:"Volver a entrar a la biblioteca :P", fecha:"",
   comentTitulo:"¿Algo que contarme? Déjame un comentario", comentBoton:"ENVIAR", comentGracias:"¡Gracias por tu comentario! :)",
-  buzonTitulo:"Libro de visitas", buzonBajada:"El murciélago lleva tu mensaje directo a mi correo. Nadie más lo ve.",
-  buzonNombre:"Tu nombre (opcional)", buzonCerrar:"Cerrar", fichaBoton:"Comentar",
+  buzonTitulo:"Libro de visitas", buzonBoton:"Dejar un comentario",
+  buzonNombre:"Tu nombre", buzonCerrar:"Cerrar", fichaBoton:"Comentar",
   secretoAviso:"¡Encontraste el libro secreto!", secretoTitulo:"Recomendación del momento",
   secretoTexto:"<b>Louis Wirth, «El urbanismo como modo de vida» (1938).</b> El ensayo clásico de la Escuela de Chicago sobre por qué el tamaño, la densidad y la diversidad de la ciudad cambian nuestra forma de vivir. Corto, claro y de descarga libre.",
   secretoBuscar:"El urbanismo como modo de vida",
@@ -888,11 +887,11 @@ renderTexts(); renderStats(); update();
 
 /* ---------- Buzón: murciélago mensajero + libro de visitas ---------- */
 (function(){
-  const btn = document.getElementById('buzon'), modal = document.getElementById('libro');
+  const btns = [...document.querySelectorAll('[data-buzon]')], modal = document.getElementById('libro');
   const form = document.getElementById('lform'), lmsg = document.getElementById('lmsg');
-  const ltxt = document.getElementById('ltxt'), lficha = document.getElementById('lficha');
-  if(!btn || !modal || !COMENTAR) return;
-  btn.hidden = false;
+  const ltxt = document.getElementById('ltxt'), lnom = document.getElementById('lnom'), lficha = document.getElementById('lficha');
+  if(!btns.length || !modal || !COMENTAR) return;
+  btns.forEach(b=>{ b.hidden = false; });
 
   /* Sprite 24x24: murciélago con sobre lacrado, dos cuadros */
   const P = {'.':null,'1':'#0b0c0e','3':'#3a3147','4':'#574a6b','5':'#7a6b96','6':'#f2e8cf','9':'#c9a96e','c':'#b8402f'};
@@ -909,16 +908,18 @@ renderTexts(); renderStats(); update();
 '.........55111155.......','..........555555........','...........5555.........','............55..........'
 ]];
   const SOBRE = ['1111111111','1966666691','1696666961','1669669661','1666cc6661','1666cc6661','1111111111'];
-  const cv = btn.querySelector('canvas'), g = cv.getContext('2d');
-  let fr = 0, timer = null;
+  const ctxs = btns.map(b=>b.querySelector('canvas').getContext('2d'));
+  let fr = 0;
   function pinta(){
-    g.clearRect(0,0,24,24);
-    const put = (rows,ox,oy)=>rows.forEach((row,y)=>{ for(let x=0;x<row.length;x++){ const c=P[row[x]]; if(c){ g.fillStyle=c; g.fillRect(x+ox,y+oy,1,1); } } });
-    put(BAT[fr],0,0); put(SOBRE,7,16);
+    ctxs.forEach(g=>{
+      g.clearRect(0,0,24,24);
+      const put = (rows,ox,oy)=>rows.forEach((row,y)=>{ for(let x=0;x<row.length;x++){ const c=P[row[x]]; if(c){ g.fillStyle=c; g.fillRect(x+ox,y+oy,1,1); } } });
+      put(BAT[fr],0,0); put(SOBRE,7,16);
+    });
   }
   pinta();
   const quieto = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if(!quieto) timer = setInterval(()=>{ fr = 1-fr; pinta(); }, 430);
+  if(!quieto) setInterval(()=>{ fr = 1-fr; pinta(); }, 430);
 
   let anterior = null;
   function abrir(r){
@@ -933,7 +934,7 @@ renderTexts(); renderStats(); update();
     modal.hidden = true;
     try{ if(anterior && anterior.isConnected) anterior.focus({preventScroll:true}); }catch(e){}
   }
-  btn.addEventListener('click', ()=>abrir(null));
+  btns.forEach(b=>b.addEventListener('click', ()=>abrir(null)));
   document.getElementById('lcerrar').addEventListener('click', cerrar);
   modal.addEventListener('click', e=>{ if(e.target === modal) cerrar(); });
   document.addEventListener('keydown', e=>{ if(e.key === 'Escape' && !modal.hidden) cerrar(); });
@@ -941,12 +942,14 @@ renderTexts(); renderStats(); update();
     const b = e.target.closest('[data-coment]'); if(!b) return;
     const r = DATA.find(x=>x.id == b.dataset.coment); if(r) abrir(r);
   });
-  ltxt.addEventListener('input', ()=>{ if(lmsg.classList.contains('err')){ lmsg.textContent=''; lmsg.classList.remove('err'); } });
+  const limpiar = ()=>{ if(lmsg.classList.contains('err')){ lmsg.textContent=''; lmsg.classList.remove('err'); } };
+  ltxt.addEventListener('input', limpiar); lnom.addEventListener('input', limpiar);
 
   form.addEventListener('submit', async e=>{
     e.preventDefault();
     const env = form.querySelector('.lenviar');
     if(!ltxt.value.trim()){ lmsg.classList.add('err'); lmsg.textContent = 'Escribe algo antes de enviar.'; ltxt.focus(); return; }
+    if(!lnom.value.trim()){ lmsg.classList.add('err'); lmsg.textContent = 'Pon tu nombre antes de enviar.'; lnom.focus(); return; }
     env.disabled = true; lmsg.classList.remove('err'); lmsg.textContent = 'Enviando…';
     const fd = new FormData(form);
     const f = lficha.dataset.ficha;
